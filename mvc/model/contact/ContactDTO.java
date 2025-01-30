@@ -37,14 +37,14 @@ public class ContactDTO {
 	}
 	
 	public ContactDTO(int id, 
-						   String name, 
-						   String number, 
-						   String streetAddress, 
-						   String city, 
-						   String state, 
-						   String zipCode,
-						   String country,
-						   String relationship) {
+				      String name, 
+				      String number, 
+				      String streetAddress, 
+				      String city, 
+				      String state, 
+				      String zipCode,
+				      String country,
+				      String relationship) {
 		this.id = id;
 		this.name = name;
 		this.number = number;
@@ -73,10 +73,10 @@ public class ContactDTO {
 		}
 	}
 
-	private void setAddress() {
+	private void setStreetAddress() {
 		System.out.print("Street address: ");
-		this.address = this.exceptionHandler.handleInputException(Input.ADDRESS);
-		if (this.address.equals("back")) {
+		this.streetAddress = this.exceptionHandler.handleInputException(Input.ADDRESS);
+		if (this.streetAddress.equals("back")) {
 			this.backOut = true;
 		}
 	}
@@ -134,7 +134,7 @@ public class ContactDTO {
 		if (this.backOut) {
 			return;
 		}
-		this.setAddress();
+		this.setStreetAddress();
 		if (this.backOut) {
 			return;
 		}
@@ -154,6 +154,7 @@ public class ContactDTO {
 		if (this.backOut) {
 			return;
 		}
+		this.address = this.streetAddress + ", " + this.city + ", " + this.state + " " + this.zipCode + ", " + this.country;
 		this.setRelationship();
 	}
 	
@@ -227,10 +228,6 @@ public class ContactDTO {
 
 	public void setCountry(String country) {
 		this.country = country;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
 	}
 
 	public void setRelationship(String relationship) {

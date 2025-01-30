@@ -92,7 +92,7 @@ public class ContactDAO implements DataAccessObjectInterface {
 		if (contact.getBackOut()) {
 			return null;
 		}
-		addressID = this.addressDAO.insertAddress(contact.getAddress(), 
+		addressID = this.addressDAO.insertAddress(contact.getStreetAddress(), 
 												  contact.getCity(), 
 												  contact.getState(), 
 												  contact.getCountry(), 
