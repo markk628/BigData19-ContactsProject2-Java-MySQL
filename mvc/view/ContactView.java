@@ -28,7 +28,8 @@ public class ContactView {
 	
 	public void select(ArrayList<ContactDTO> contacts) {
 		if (contacts.isEmpty()) {
-			System.out.println("Contacts empty");
+			System.out.println("No contact with that name");
+			
 		} else {
 			contacts.forEach(System.out::println);
 		}

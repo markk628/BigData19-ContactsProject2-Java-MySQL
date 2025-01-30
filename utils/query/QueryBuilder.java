@@ -65,7 +65,7 @@ public class QueryBuilder {
 			lastLine = "ORDER BY c." + ContactFields.ID.toString();
 			break;
 		case NAME:
-			lastLine = "WHERE c." + ContactFields.NAME.toString() + " = ?";
+			lastLine = "WHERE c." + ContactFields.NAME.toString() + " LIKE ?";
 			break;
 		default:
 			lastLine = "WHERE c." + ContactFields.NUMBER.toString() + " = ?";

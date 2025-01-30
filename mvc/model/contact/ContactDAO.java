@@ -158,7 +158,7 @@ public class ContactDAO implements DataAccessObjectInterface {
 
 		this.mainConnection.connect(QueryBuilder.select(SelectOption.NAME));
 		try {
-			this.mainConnection.getPreparedStatement().setString(1, name);
+			this.mainConnection.getPreparedStatement().setString(1, "%" + name + "%");
 			rs = this.mainConnection.executeQuery();
 			while (rs.next()) {
 				contactList.add(new ContactDTO(rs.getInt(ContactFields.ID.toString()),
@@ -181,7 +181,7 @@ public class ContactDAO implements DataAccessObjectInterface {
 	}
 
 	// 받은 contactsList에서 원하는 contact를 반환하는 메소드
-	private ContactDTO getContact(ArrayList<ContactDTO> contactsList) {
+	private ContactDTO getContact(ArrayList<ContactDTO> contactsList, String name) {
 		int nameCount = contactsList.size();
 		int selection;
 		String option;
@@ -192,7 +192,7 @@ public class ContactDAO implements DataAccessObjectInterface {
 			System.out.println("You have no contacts");
 			return null;
 		}
-		System.out.println("There are " + nameCount + " people with the name " + contactsList.get(0).getName());
+		System.out.println("There are " + nameCount + " people with the name " + name);
 		System.out.println("Select the contact to update");
 		for (int i = 0; i < nameCount; i++) {
 			System.out.println((i + 1) + ". " + "\n" + contactsList.get(i));
@@ -412,7 +412,7 @@ public class ContactDAO implements DataAccessObjectInterface {
 		if (name.equals("back")) {
 			return null;
 		}
-		contactToUpdate = this.getContact(this.select(name));
+		contactToUpdate = this.getContact(this.select(name), name);
 		if (contactToUpdate == null) {
 			return null;
 		}
@@ -430,7 +430,7 @@ public class ContactDAO implements DataAccessObjectInterface {
 		if (name.equals("back")) {
 			return null;
 		}
-		contactToUpdate = this.getContact(this.select(name));
+		contactToUpdate = this.getContact(this.select(name), name);
 		if (contactToUpdate == null) {
 			return null;
 		}
