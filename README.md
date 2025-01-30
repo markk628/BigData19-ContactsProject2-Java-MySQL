@@ -5,10 +5,10 @@ A java program that creates/reads/updates/deletes contacts. Created contacts are
 ### Create a contact
 ![](static/insert.png)
 ### Read all contacts
-![](static/select.png)
-### Read a contact
 ![](static/select1.png)
 ![](static/select2.png)
+### Read a contact
+![](static/selectByName.png)
 ### Update a contact
 ![](static/update.png)
 ### Delete a contact
