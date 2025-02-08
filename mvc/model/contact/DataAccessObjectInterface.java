@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @fileNmae	: DataAccessObjectInterface.java
  * @author		: mark
  * @date		: 2025.01.30
- * @description : DAO Interface
+ * @description : Data Access Object Interface
  * ===========================================================
  * DATE				AUTHOR				NOTE
  * -----------------------------------------------------------

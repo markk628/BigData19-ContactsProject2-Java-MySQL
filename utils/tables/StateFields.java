@@ -22,17 +22,6 @@ public enum StateFields {
 		this.field = field;
 	}
 
-	public StateFields field(String field) {
-		switch (field.toLowerCase()) {
-		case "city_id":
-			return ID;
-		case "state":
-			return STATE;
-		default:
-			return COUNTRY;
-		}
-	}
-
 	public static String tableName() {
 		return "state";
 	}
@@ -40,5 +29,9 @@ public enum StateFields {
 	@Override
 	public String toString() {
 		return this.field;
+	}
+	
+	public String toStringForJob() {
+		return "job_" + this.field;
 	}
 }

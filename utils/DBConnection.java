@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Types;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,7 +14,8 @@ import java.util.ArrayList;
  * @fileNmae	: DBConnection.java
  * @author		: mark
  * @date		: 2025.01.30
- * @description : JDBC를 제어하는 클래스
+ * @description : JDBC control center
+ * 				  JDBC를 제어하는 클래스
  * ===========================================================
  * DATE				AUTHOR				NOTE
  * -----------------------------------------------------------
@@ -46,6 +48,30 @@ public class DBConnection {
 			this.preparedStatement = this.connection.prepareStatement(query);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setNull(int i) {
+		try {
+			this.preparedStatement.setNull(i, Types.INTEGER);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setString(int i, String value) {
+		try {
+			this.preparedStatement.setString(i, value);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setInt(int i, int value) {
+		try {
+			this.preparedStatement.setInt(i, value);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

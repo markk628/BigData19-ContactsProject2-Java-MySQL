@@ -5,7 +5,8 @@ package utils.exceptionhandler;
  * @fileNmae	: Input.java
  * @author		: mark
  * @date		: 2025.01.28
- * @description : 무엇을 입력받을지 여부하는 enum
+ * @description : Enum that indicates what the user will be inputing
+ * 				  무엇을 입력받을지 여부하는 enum
  * ===========================================================
  * DATE				AUTHOR				NOTE
  * -----------------------------------------------------------

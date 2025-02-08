@@ -21,15 +21,6 @@ public enum RelationshipFields {
 		this.field = field;
 	}
 	
-	public RelationshipFields field(String field) {
-		switch (field.toLowerCase()) {
-		case "relationship_id":
-			return ID;
-		default:
-			return RELATIONSHIP;
-		}
-	}
-	
 	public static String tableName() {
 		return "relationship";
 	}

@@ -42,15 +42,47 @@ CREATE TABLE relationship (
 	PRIMARY KEY (relationship_id)
 );
 
+CREATE TABLE company (
+	company_id 	INT AUTO_INCREMENT,
+	company 	VARCHAR(50) NOT NULL UNIQUE,
+	PRIMARY KEY (company_id)
+);
+
+CREATE TABLE profession (
+	profession_id		INT AUTO_INCREMENT,
+	profession			VARCHAR(20) NOT NULL UNIQUE,
+	PRIMARY KEY (profession_id)
+);
+
+CREATE TABLE job (
+	job_id				INT AUTO_INCREMENT,
+	profession_id		INT NOT NULL,
+	company_id 			INT NOT NULL,
+	work_address_id		INT,
+	PRIMARY KEY (job_id),
+	FOREIGN KEY (profession_id)
+			REFERENCES profession(profession_id),
+	FOREIGN KEY (company_id)
+			REFERENCES company(company_id),
+			FOREIGN KEY (work_address_id)
+			REFERENCES address(address_id)
+);
+
 CREATE TABLE contact (
 	contact_id 		INT AUTO_INCREMENT,
 	contact_name 	VARCHAR(30) NOT NULL,
 	contact_number 	VARCHAR(11) NOT NULL UNIQUE,
-	address_id 		INT NOT NULL,
+	address_id 		INT,
 	relationship_id INT NOT NULL,
+	nationality_id 	INT NOT NULL,
+	job_id INT,
 	PRIMARY KEY (contact_id),
 	FOREIGN KEY (address_id) 
-			REFERENCES address(address_id), 
+			REFERENCES address(address_id),
 	FOREIGN KEY (relationship_id)
-			REFERENCES relationship(relationship_id)			
+			REFERENCES relationship(relationship_id),
+	FOREIGN KEY (nationality_id)
+			REFERENCES country(country_id),
+	FOREIGN KEY (job_id)
+			REFERENCES job(job_id)
 );

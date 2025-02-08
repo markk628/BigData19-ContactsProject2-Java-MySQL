@@ -33,4 +33,8 @@ private final String field;
 	public String toString() {
 		return this.field;
 	}
+	
+	public String toStringForJob() {
+		return "job_" + this.field;
+	}
 }

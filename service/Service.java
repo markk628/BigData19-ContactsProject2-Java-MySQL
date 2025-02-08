@@ -11,7 +11,8 @@ import mvc.view.ContactView;
  * @fileNmae	: Service.java
  * @author		: mark
  * @date		: 2025.01.30
- * @description : DataAccessObjectInterface 메소드들을 호출하는 클래스
+ * @description : Calls DataAccessObjectInterface's methods 
+ * 				  DataAccessObjectInterface 메소드들을 호출하는 클래스
  * ===========================================================
  * DATE				AUTHOR				NOTE
  * -----------------------------------------------------------

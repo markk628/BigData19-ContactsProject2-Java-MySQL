@@ -9,7 +9,8 @@ import service.Service;
  * @fileNmae	: ContactsController.java
  * @author		: mark
  * @date		: 2025.01.30
- * @description : Contacts프로그램을 실행하는 클래스
+ * @description : Starts/stops the contacts program 
+ * 				  Contacts프로그램을 실행하는 클래스
  * ===========================================================
  * DATE				AUTHOR				NOTE
  * -----------------------------------------------------------

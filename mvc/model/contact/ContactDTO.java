@@ -1,5 +1,7 @@
 package mvc.model.contact;
 
+import mvc.model.address.AddressDTO;
+import mvc.model.job.JobDTO;
 import utils.exceptionhandler.ExceptionHandler;
 import utils.exceptionhandler.Input;
 
@@ -8,7 +10,7 @@ import utils.exceptionhandler.Input;
  * @fileNmae	: ContactDTO.java
  * @author		: mark
  * @date		: 2025.01.30
- * @description : Contacts DTO
+ * @description : Contacts Data Transfer Object
  * ===========================================================
  * DATE				AUTHOR				NOTE
  * -----------------------------------------------------------
@@ -21,15 +23,12 @@ public class ContactDTO {
 	
 	private ExceptionHandler exceptionHandler;
 	private int id = 0;
-	private String number = "back";
-	private String name = "back";
-	private String streetAddress = "back";
-	private String city = "back";
-	private String state = "back";
-	private String zipCode = "back";
-	private String country = "back";
-	private String address = "back";
-	private String relationship = "back";
+	private String number;
+	private String name;
+	private AddressDTO address = null;
+	private String relationship;
+	private String nationality;
+	private JobDTO job = null;
 	public boolean backOut = false;
 	
 	public ContactDTO(ExceptionHandler exceptionHandler) {
@@ -39,22 +38,17 @@ public class ContactDTO {
 	public ContactDTO(int id, 
 				      String name, 
 				      String number, 
-				      String streetAddress, 
-				      String city, 
-				      String state, 
-				      String zipCode,
-				      String country,
-				      String relationship) {
+				      AddressDTO address,
+				      String relationship,
+				      String nationality,
+				      JobDTO job) {
 		this.id = id;
 		this.name = name;
 		this.number = number;
-		this.streetAddress = streetAddress;
-		this.city = city;
-		this.state = state;
-		this.zipCode = zipCode;
-		this.country = country;
-		this.address = streetAddress + ", " + city + ", " + state + " " + zipCode + ", " + country;
+		this.address = address;
 		this.relationship = relationship;
+		this.nationality = nationality;
+		this.job = job;
 	}
 	
 	private void setNumber() {
@@ -72,45 +66,11 @@ public class ContactDTO {
 			this.backOut = true;
 		}
 	}
-
-	private void setStreetAddress() {
-		System.out.print("Street address: ");
-		this.streetAddress = this.exceptionHandler.handleInputException(Input.ADDRESS);
-		if (this.streetAddress.equals("back")) {
-			this.backOut = true;
-		}
-	}
-
-	private void setCity() {
-		System.out.print("City: ");
-		this.city = this.exceptionHandler.handleInputException(Input.ADDRESS);
-		if (this.city.equals("back")) {
-			this.backOut = true;
-		}
-	}
-
-	private void setState() {
-		System.out.print("State: ");
-		this.state = this.exceptionHandler.handleInputException(Input.ADDRESS);
-		if (this.state.equals("back")) {
-			this.backOut = true;
-		}
-	}
-
-	private void setZipCode() {
-		System.out.print("Zip code: ");
-		this.zipCode = this.exceptionHandler.handleInputException(Input.ADDRESS);
-		if (this.zipCode.equals("back")) {
-			this.backOut = true;
-		}
-	}
-
-	private void setCountry() {
-		System.out.print("Country: ");
-		this.country = this.exceptionHandler.handleInputException(Input.ADDRESS);
-		if (this.country.equals("back")) {
-			this.backOut = true;
-		}
+	
+	private void setAddress() {
+		AddressDTO address = new AddressDTO(exceptionHandler);
+		this.backOut = !address.didSetValues();
+		this.address = address;
 	}
 
 	private void setRelationship() {
@@ -118,6 +78,32 @@ public class ContactDTO {
 		this.relationship = this.exceptionHandler.handleInputException(Input.RELATIONSHIP);
 		if (this.relationship.equals("back")) {
 			this.backOut = true;
+		}
+	}
+	
+	private void setNationality() {
+		System.out.print("Nationality: ");
+		this.nationality = this.exceptionHandler.handleInputException(Input.ADDRESS);
+		if (this.nationality.equals("back")) {
+			this.backOut = true;
+		}
+	}
+	
+	private void setJob() {
+		String answer;
+		JobDTO job;
+		
+		System.out.print("Would you like to enter " + this.name + "'s job? (y/n): ");
+		answer = this.exceptionHandler.handleInputException(Input.YESORNO).toLowerCase();
+		if (answer.equals("back")) {
+			this.job = null;
+		} else if (answer.charAt(0) == 'y') {
+			job = new JobDTO(exceptionHandler);
+			this.backOut = !job.didSetValues(this);
+			if (job.getAddress() == null) {
+				job.setAddress(this.address);
+			}
+			this.job = job; 
 		}
 	}
 	
@@ -134,28 +120,19 @@ public class ContactDTO {
 		if (this.backOut) {
 			return;
 		}
-		this.setStreetAddress();
+		this.setAddress();
 		if (this.backOut) {
 			return;
 		}
-		this.setCity();
-		if (this.backOut) {
-			return;
-		}
-		this.setState();
-		if (this.backOut) {
-			return;
-		}
-		this.setCountry();
-		if (this.backOut) {
-			return;
-		}
-		this.setZipCode();
-		if (this.backOut) {
-			return;
-		}
-		this.address = this.streetAddress + ", " + this.city + ", " + this.state + " " + this.zipCode + ", " + this.country;
 		this.setRelationship();
+		if (this.backOut) {
+			return;
+		}
+		this.setNationality();
+		if (this.backOut) {
+			return;
+		}
+		this.setJob();
 	}
 	
 	public void cancel() {
@@ -173,78 +150,59 @@ public class ContactDTO {
 	public String getNumber() {
 		return this.number;
 	}
-	
-	public String getStreetAddress() {
-		return this.streetAddress;
-	}
 
-	public String getCity() {
-		return this.city;
-	}
-
-	public String getState() {
-		return this.state;
-	}
-	
-	public String getZipCode() {
-		return this.zipCode;
-	}
-
-	public String getCountry() {
-		return this.country;
-	}
-
-	public String getAddress() {
+	public AddressDTO getAddress() {
 		return this.address;
 	}
 
 	public String getRelationship() {
 		return this.relationship;
 	}
-
-	public void setNumber(String number) {
-		this.number = number;
+	
+	public String getNationality() {
+		return this.nationality;
 	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setStreetAddress(String streetAddress) {
-		this.streetAddress = streetAddress;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public void setRelationship(String relationship) {
-		this.relationship = relationship;
+	
+	public JobDTO getJob() {
+		return this.job;
 	}
 
 	public boolean getBackOut() {
 		return this.backOut;
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	
+	public void setRelationship(String relationship) {
+		this.relationship = relationship;
+	}
+	
+	public void setJob(JobDTO job) {
+		this.job = job;
+	}
+	
+	public void setAddress(AddressDTO address) {
+		this.address = address;
+	}
 
 	@Override
 	public String toString() {
+		String home = this.address != null ? this.address.toString() : "Homeless";
+		String job = this.job != null ? this.job.toString() : "Unemployeed";
 		return "-----------------------------------------------------------------------------\n" 
 			 + "name: " + this.name + "\n" 
 			 + "number: " + this.number + "\n" 
-			 + "address: " + this.address + "\n" 
+			 + "address: " + home + "\n" 
 			 + "relationship: " + this.relationship + "\n"
+			 + "nationality: " + this.nationality + "\n"
+			 + "job: \n"
+			 + job.indent(4) + "\n"
 			 + "-----------------------------------------------------------------------------";
 	}
 }

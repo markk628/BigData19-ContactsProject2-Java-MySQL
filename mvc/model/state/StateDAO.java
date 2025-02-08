@@ -12,7 +12,8 @@ import utils.tables.StateFields;
  * @fileNmae	: StateDAO.java
  * @author		: mark
  * @date		: 2025.01.30
- * @description : State table을 제어하는 클래스
+ * @description : Controls the state table
+ * 				  state table을 제어하는 클래스
  * ===========================================================
  * DATE				AUTHOR				NOTE
  * -----------------------------------------------------------
@@ -21,6 +22,7 @@ import utils.tables.StateFields;
 public class StateDAO {
 	private DBConnection dbConnection = new DBConnection();
 	
+	// Returns the ID of the last inserted state (if the state table is empty will return 0)
 	// 마지막으로 입력한 state의 ID를 반환하는 메소드
 	private int getLastInsertedStateID() {
 		int id = 0;
@@ -40,6 +42,7 @@ public class StateDAO {
 		return id;
 	}
 	
+	// Returns the id of the passed in state (if it's not in the table will return 0)
 	// 입력받은 state가 있으면 그 state의 ID를 반환하는 메소드 (없으면 0 반환)
 	private int getStateIfStateInStateTable(String state, int countryID) {
 		int id = 0;
@@ -61,11 +64,12 @@ public class StateDAO {
 		return id;
 	}
 	
+	// Inserts the passed in state and returns the ID if it's not in the database (returns the ID if it is in the database)
 	// 데이터베이스에 새 state를 삽입하고 ID를 반환하거나, 데이터베이스에 이미 state가 있는 경우 해당 state의 ID를 반환하는 메서드
 	public int insertAndOrGetState(String state, int countryID) {
-		int potentialStateID = this.getStateIfStateInStateTable(state, countryID);
-		if (potentialStateID != 0) {
-			return potentialStateID;
+		int stateID = this.getStateIfStateInStateTable(state, countryID);
+		if (stateID != 0) {
+			return stateID;
 		}
 		boolean didThrowError = false;
 

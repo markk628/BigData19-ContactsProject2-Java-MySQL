@@ -16,30 +16,21 @@ public enum ContactFields {
 	NAME("contact_name"),
 	NUMBER("contact_number"),
 	ADDRESS("address_id"),
-	RELATIONSHIP("relationship_id")	;
+	RELATIONSHIP("relationship_id"),
+	NATIONALITY("nationality_id"),
+	JOB("job_id");
 	private final String field;
 	
 	private ContactFields(String field) {
 		this.field = field;
 	}
 	
-	public ContactFields field(String field) {
-		switch (field.toLowerCase()) {
-		case "contact_id":
-			return ID;
-		case "contact_name":
-			return NAME;
-		case "contact_number":
-			return NUMBER;
-		case "address_id":
-			return ADDRESS;
-		default:
-			return RELATIONSHIP;
-		}
-	}
-	
 	public static String tableName() {
 		return "contact";
+	}
+	
+	public static String nationality() {
+		return "nationality";
 	}
 	
 	@Override

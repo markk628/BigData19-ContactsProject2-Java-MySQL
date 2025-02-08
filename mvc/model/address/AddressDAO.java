@@ -15,7 +15,8 @@ import utils.tables.AddressFields;
  * @fileNmae	: AddressDAO.java
  * @author		: mark
  * @date		: 2025.01.30
- * @description : Address table을 제어하는 클래스
+ * @description : Controls the address table 
+ * 				  address table을 제어하는 클래스
  * ===========================================================
  * DATE				AUTHOR				NOTE
  * -----------------------------------------------------------
@@ -27,6 +28,7 @@ public class AddressDAO {
 	private CityDAO cityDAO = new CityDAO();
 	private DBConnection dbConnection = new DBConnection();
 	
+	// Returns the ID of the last inserted address (if the address table is empty will return 0)
 	// 마지막으로 입력한 address의 ID를 반환하는 메소드 (address table이 비어있으면 0 반환)
 	private int getLastInsertedAddressID() {
 		int id = 0;
@@ -46,8 +48,9 @@ public class AddressDAO {
 		return id;
 	}
 	
+	// Returns the id of the passed in address (if it's not in the table will return 0)
 	// 입력받은 address가 있으면 그 address의 ID를 반환하는 메소드 (없으면 0 반환)
-	private int getAddressIfAddressInAddressTable(String address, int cityID) {
+	private int getAddressIfAddressInAddressTable(String address, int cityID, String zipCode) {
 		int id = 0;
 		ResultSet rs = null;
 		
@@ -55,6 +58,7 @@ public class AddressDAO {
 		try {
 			this.dbConnection.getPreparedStatement().setString(1, address);
 			this.dbConnection.getPreparedStatement().setInt(2, cityID);
+			this.dbConnection.getPreparedStatement().setString(3, zipCode);
 			rs = this.dbConnection.executeQuery();
 			if (rs.next()) {
 				id = rs.getInt(AddressFields.ID.toString());
@@ -67,22 +71,23 @@ public class AddressDAO {
 		return id;
 	}
 	
+	// Inserts the passed in address and returns the ID if it's not in the database (returns the ID if it is in the database)
 	// 데이터베이스에 새 address를 삽입하고 ID를 반환하거나, 데이터베이스에 이미 address가 있는 경우 해당 address의 ID를 반환하는 메서드 
-	public int insertAddress(String address, String city, String state, String country, String zip_code) {
-		int countryID = this.countryDAO.insertAndOrGetCountry(country);
-		int stateID = this.stateDAO.insertAndOrGetState(state, countryID);
-		int cityID = this.cityDAO.insertAndOrGetCity(city, stateID);
-		int potentialAddressID = this.getAddressIfAddressInAddressTable(address, cityID);
-		if (potentialAddressID != 0) {
-			return potentialAddressID;
+	public int insertAndOrGetAddress(AddressDTO address) {
+		int countryID = this.countryDAO.insertAndOrGetCountry(address.getCountry());
+		int stateID = this.stateDAO.insertAndOrGetState(address.getState(), countryID);
+		int cityID = this.cityDAO.insertAndOrGetCity(address.getCity(), stateID);
+		int addressID = this.getAddressIfAddressInAddressTable(address.getStreetAddress(), cityID, address.getZipCode());
+		if (addressID != 0) {
+			return addressID;
 		}
 		boolean didThrowError = false;
 
 		this.dbConnection.connect(QueryBuilder.insertAddress());
 		try {
-			this.dbConnection.getPreparedStatement().setString(1, address);
+			this.dbConnection.getPreparedStatement().setString(1, address.getStreetAddress());
 			this.dbConnection.getPreparedStatement().setInt(2, cityID);
-			this.dbConnection.getPreparedStatement().setString(3, zip_code);
+			this.dbConnection.getPreparedStatement().setString(3, address.getZipCode());
 			this.dbConnection.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQLException AddressDAO:insertAddress");

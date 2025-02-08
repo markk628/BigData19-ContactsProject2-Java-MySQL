@@ -9,7 +9,8 @@ import mvc.model.contact.ContactDTO;
  * @fileNmae	: ContactView.java
  * @author		: mark
  * @date		: 2025.01.30
- * @description : Contacts database제어 결과를 출력하는 클래스
+ * @description : Prints out contacts database's DML statement results
+ * 				  contacts database제어 DML 결과를 출력하는 클래스
  * ===========================================================
  * DATE				AUTHOR				NOTE
  * -----------------------------------------------------------
@@ -17,6 +18,7 @@ import mvc.model.contact.ContactDTO;
  */
 public class ContactView {
 	
+	// INSERT
 	public void insert(ContactDTO contact) {
 		if (contact != null) {
 			System.out.println("Contact added");
@@ -26,6 +28,7 @@ public class ContactView {
 		}
 	}
 	
+	// SELECT
 	public void select(ArrayList<ContactDTO> contacts) {
 		if (contacts.isEmpty()) {
 			System.out.println("No contact with that name");
@@ -35,6 +38,8 @@ public class ContactView {
 		}
 	}
 	
+	// SELECT by name
+	// SELECT 이름으로
 	public void select(ContactDTO contact) {
 		if (contact != null) {
 			System.out.println(contact);
@@ -43,6 +48,7 @@ public class ContactView {
 		}
 	}
 	
+	// UPDATE
 	public void update(ContactDTO contact) {
 		if (contact != null) {
 			System.out.println("Contact updated");
@@ -52,6 +58,7 @@ public class ContactView {
 		}
 	}
 	
+	// DELETE
 	public void delete(ContactDTO contact) {
 		if (contact != null) {
 			System.out.println("Contact deleted");
