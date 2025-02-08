@@ -9,6 +9,7 @@ Need a [MySQL Connector](https://downloads.mysql.com/archives/c-j/)
 ### Read all contacts
 ![](static/select1.png)
 ![](static/select2.png)
+![](static/select3.png)
 ### Read a contact
 ![](static/selectByName.png)
 ### Update a contact
